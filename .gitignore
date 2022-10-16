@@ -1,0 +1,8 @@
+*
+!.gitignore
+!README
+!init.el
+!/loads/
+!/loads/**
+!/snippets/
+!/snippets/**

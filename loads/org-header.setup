@@ -1,0 +1,28 @@
+# -*- mode: org; -*-
+
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="src/readtheorg_theme/css/htmlize.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="src/readtheorg_theme/css/readtheorg.css"/>
+
+#+HTML_HEAD: <script type="text/javascript" src="src/lib/js/jquery.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="src/lib/js/bootstrap.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="src/lib/js/jquery.stickytableheaders.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="src/readtheorg_theme/js/readtheorg.js"></script>
+
+#+LATEX_CLASS: elegantnote
+#+LATEX_COMPILER: xelatex
+#+PANDOC_OPTIONS: standalone:t pdf-engine:xelatex
+#+PANDOC_VARIABLES: papersize:a4
+#+PANDOC_VARIABLES: "mainfont:Source Han Sans CN"
+#+PANDOC_VARIABLES: "monofont:JetBrains Mono"
+#+PANDOC_VARIABLES: geometry:margin=1in
+#+PANDOC_VARIABLES: "CJKmainfont:Source Han Sans CN"
+#+PANDOC_VARIABLES: "CJKoptions:ItalicFont=KaiTi"
+#+PANDOC_OPTIONS: listings:t
+#+PANDOC_OPTIONS: template:c:/Users/Mirac/AppData/Roaming/.emacs.d/loads/eisvogel.latex
+#+PANDOC_VARIABLES: caption-justification:centering
+#+PANDOC_VARIABLES: colorlinks:true
+#+PANDOC_OPTIONS: toc:t
+
+#+PANDOC_VARIABLES: "author:刘诣元（3190104870）"
+#+OPTIONS: ^:nil
+#+OPTIONS: _:nil
