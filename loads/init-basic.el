@@ -40,7 +40,7 @@
    (set-language-environment 'utf-8)
    (set-locale-environment "UTF-8")
    (set-keyboard-coding-system 'utf-8)
-   (set-clipboard-coding-system 'utf-16-le)
+   (set-clipboard-coding-system 'utf-16le-dos)
    (set-terminal-coding-system 'utf-8)
    (set-buffer-file-coding-system 'utf-8)
    (set-default-coding-systems 'utf-8)
