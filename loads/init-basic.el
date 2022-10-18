@@ -58,6 +58,7 @@
 ;;(global-hl-line-mode 1)
 
 (setq org-roam-v2-ack t)
+(pixel-scroll-precision-mode 1)
 
 (setq backup-by-copying t
       backup-directory-alist '(("." . "~/.emacs.d/backup")))
