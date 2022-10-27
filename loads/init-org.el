@@ -1,11 +1,97 @@
+(setq fixed-pitch-faces
+  '(diff-added
+    diff-context
+    diff-file-header
+    diff-function
+    diff-header
+    diff-hunk-header
+    diff-removed
+    font-latex-math-face
+    font-latex-sedate-face
+    font-latex-warning-face
+    font-latex-sectioning-5-face
+    font-lock-builtin-face
+    font-lock-comment-delimiter-face
+    font-lock-constant-face
+    font-lock-doc-face
+    font-lock-function-name-face
+    font-lock-keyword-face
+    font-lock-negation-char-face
+    font-lock-preprocessor-face
+    font-lock-regexp-grouping-backslash
+    font-lock-regexp-grouping-construct
+    font-lock-string-face
+    font-lock-type-face
+    font-lock-variable-name-face
+    line-number
+    line-number-current-line
+    line-number-major-tick
+    line-number-minor-tick
+    message-header-name
+    message-header-to
+    message-header-cc
+    message-header-newsgroups
+    message-header-xheader
+    message-header-subject
+    message-header-other
+    org-block
+    ;;org-block-begin-line
+    ;;org-block-end-line
+    org-document-info-keyword
+    org-code
+    org-indent
+    org-latex-and-related
+    org-checkbox
+    org-formula
+    ;;org-meta-line
+    org-table
+    org-verbatim
+    ))
+
+
 (use-package org
   :config
-  
-  (add-hook 'org-mode-hook
-            (lambda ()
-              ;;(org-cycle-hide-drawers 'all)
-              (org-indent-mode 1)))
+  (require 'org-faces)
+  (require 'font-latex)
+  (add-hook 'org-mode-hook (lambda ()
+                             (dolist (face fixed-pitch-faces)  (set-face-attribute face nil :inherit 'fixed-pitch))))
+
+  (add-hook 'org-mode-hook (lambda () (set-face-attribute 'org-indent nil :foreground "#F5F5F5")))
+  (let* ((variable-tuple
+          (cond ((x-list-fonts "Sarasa SC")    '(:font "Sarasa SC"))
+                ((x-list-fonts "Source Sans Pro") '(:font "Source Sans Pro"))
+                (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
+         (base-font-color     (face-foreground 'default nil 'default))
+         (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
+
+    (custom-theme-set-faces
+     'user
+     `(org-level-8 ((t (,@headline ,@variable-tuple))))
+     `(org-level-7 ((t (,@headline ,@variable-tuple))))
+     `(org-level-6 ((t (,@headline ,@variable-tuple))))
+     `(org-level-5 ((t (,@headline ,@variable-tuple))))
+     `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.1))))
+     `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.15))))
+     `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.2))))
+     `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.3))))
+     `(org-document-title ((t (,@headline ,@variable-tuple :height 1.5 :underline nil)))))
+    )
+
+  ;;(require 'org-variable-pitch)
+  ;;(add-hook 'org-mode-hook
+  ;;        (lambda ()
+  ;;(org-cycle-hide-drawers 'all)
+  ;;         (org-indent-mode 1)))
+  (setq org-startup-indented t)
   (add-hook 'org-mode-hook 'org-num-mode)
+  (add-hook 'org-mode-hook 'variable-pitch-mode)
+
+  (setq org-link-frame-setup
+        '((vm . vm-visit-folder-other-frame)
+          (vm-imap . vm-visit-imap-folder-other-frame)
+          (gnus . org-gnus-no-new-news)
+          (file . find-file)
+          (wl . wl-other-frame)))
   
 
   (setq org-hide-emphasis-markers t
@@ -16,7 +102,6 @@
         org-catch-invisible-edits 'show-and-error
         org-special-ctrl-a/e t
         org-insert-heading-respect-content t
-        org-pretty-entities t
         org-ellipsis "…")
   
   ;; Open org files with previewing
@@ -94,7 +179,7 @@
                    ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
     ;; (add-to-list 'org-latex-packages-alist '("cachedir=\\string~/.emacs.d/xenops/cache/" "minted")) ;; 添加额外包minted: 代码高亮
-    ;; (add-to-list 'org-latex-packages-alist '("" "ulem")) ;; 添加额外包ulem：下划线
+    (add-to-list 'org-latex-packages-alist '("" "mathrsfs")) ;; 添加额外包ulem：下划线
     
     (setq org-latex-listings 'minted  ;; 代码高亮包minted 需要安装Pygments
           org-latex-minted-options ;; minted参数
@@ -146,6 +231,7 @@
   :config
   (add-hook 'org-mode-hook #'org-modern-mode)
   (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
+  (setq org-modern-table nil) ;; conflict with valign mode, disabled
   )
 
 

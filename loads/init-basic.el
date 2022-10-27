@@ -19,9 +19,6 @@
   (package-install 'use-package)
   )
 
-;; show statistics after init
-(setq use-package-compute-statistics t)
-
 (setq use-package-always-ensure t)
 
 (use-package auto-package-update
@@ -35,34 +32,33 @@
 
 
 
- (when 'windows-nt
-   (prefer-coding-system 'utf-8)
-   (set-language-environment 'utf-8)
-   (set-locale-environment "UTF-8")
-   (set-keyboard-coding-system 'utf-8)
-   (set-clipboard-coding-system 'utf-16le-dos)
-   (set-terminal-coding-system 'utf-8)
-   (set-buffer-file-coding-system 'utf-8)
-   (set-default-coding-systems 'utf-8)
-   (set-selection-coding-system 'utf-8)
-   (modify-coding-system-alist 'process "*" 'utf-8)
-   (set-file-name-coding-system 'utf-8)
-   (setq native-comp-async-report-warnings-errors nil)
-;; ;;  (setenv "PATH" "C:\\msys64\\usr\\local\\bin;C:\\msys64\\usr\\bin;C:\\msys64\\usr\\bin;C:\\msys64\\opt\\bin;C:\\Windows\\System32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\msys64\\usr\\bin\\site_perl;C:\\msys64\\usr\\bin\\vendor_perl;C:\\msys64\\usr\\bin\\core_perl;C:\\texlive\\2021\\bin\\win32;C:\\Users\\Mirac\\AppData\\Local\\Pandoc;C:\\Program Files\\ImageMagick-7.1.0-Q16-HDRI;C:\\Program Files\\Common Files\\Oracle\\Java\\javapath;C:\\Program Files\\Wolfram Research\\WolframScript;C:\\Users\\Mirac\\AppData\\Local\\Programs\\Python\\Python39;C:\\Users\\Mirac\\AppData\\Local\\Programs\\Python\\Python39\\Scripts;C:\\Program Files\\Google\\Chrome\\Application;")
-;; ;;  (setq exec-path (split-string (getenv "PATH") path-separator))
-   )
+
+(set-default-coding-systems 'utf-8)
+(prefer-coding-system 'utf-8)
+(set-language-environment 'utf-8)
+(set-locale-environment "UTF-8")
+(set-keyboard-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-buffer-file-coding-system 'utf-8)
+(modify-coding-system-alist 'process "*" 'utf-8)
+(set-file-name-coding-system 'utf-8)
+(setq-default buffer-file-coding-system 'utf-8)
+(add-to-list 'process-coding-system-alist '("rg" utf-8 . gbk))
+
+(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+(set-next-selection-coding-system 'utf-16-le)
+(set-selection-coding-system 'utf-16-le)
+(set-clipboard-coding-system 'utf-16-le)
+;;(set-clipboard-coding-system 'utf-16le-dos)
 
 
-
-;;(global-display-line-numbers-mode 1)
-;;(global-hl-line-mode 1)
+(setq native-comp-async-report-warnings-errors nil)
 
 (setq org-roam-v2-ack t)
 (pixel-scroll-precision-mode 1)
 
 (setq backup-by-copying t
       backup-directory-alist '(("." . "~/.emacs.d/backup")))
-
 
 (use-package major-mode-hydra
   :ensure t
