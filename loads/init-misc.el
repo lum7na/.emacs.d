@@ -16,6 +16,10 @@
   :config
   (setq aya-persist-snippets-dir (concat user-emacs-directory "my/snippets")))
 
+(use-package avy
+  :bind
+  (("C-M-g" . avy-goto-char-timer)))
+
 (use-package company
   :hook (after-init . global-company-mode)
   :config
@@ -44,5 +48,10 @@
   (dired-create-empty-file ".projectile")
   (projectile-add-known-project default-directory)
   )
+
+(use-package which-key
+  :config
+  (which-key-mode 1)
+)
 
 (provide 'init-misc)

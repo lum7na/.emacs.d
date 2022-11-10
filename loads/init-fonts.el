@@ -14,32 +14,33 @@
 
 (set-face-attribute
  'default nil
- :font (font-spec :family "Cascadia Mono"
-                  :weight 'normal
+ :font (font-spec :family "Cascadia Code"
+                  :weight 'regular
                   :slant 'normal)
- :height 120)
+ :height 160)
 
 (set-face-attribute
  'fixed-pitch nil
- :font (font-spec :family "Cascadia Mono"
-                  :weight 'normal
+ :font (font-spec :family "Cascadia Code"
+                  :weight 'regular
                   :slant 'normal)
- :height 120)
+ :height 160)
 
 
 (set-face-attribute
   'variable-pitch nil
-  :font (font-spec :name "Dubai"
+  :font (font-spec :name "Verdana"
                    :weight 'normal
                    :slant 'normal)
-  :height 120)
+  :height 160)
 
-(dolist (charset '(kana han symbol cjk-misc bopomofo)) 
- (set-fontset-font
-  (frame-parameter nil 'font)
-  charset
-  (font-spec :name "更纱黑体 SC"
-             :weight 'regular
-             )))                
+(when (display-graphic-p)
+  (dolist (charset '(kana han symbol cjk-misc bopomofo)) 
+    (set-fontset-font
+     (frame-parameter nil 'font)
+     charset
+     (font-spec :name "苹方-简"
+                :weight 'regular
+                ))))
 
 (provide 'init-fonts)

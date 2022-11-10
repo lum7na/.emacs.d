@@ -8,6 +8,9 @@
 
 
 ;; Directory operations
+
+(require 'init-vars)
+
 (use-package dired
   :ensure nil
   :bind (:map dired-mode-map
@@ -42,6 +45,7 @@
   ;; Shows icons
   (use-package all-the-icons-dired
     :diminish
+    :if in-gui
     :hook (dired-mode . all-the-icons-dired-mode))
   
 

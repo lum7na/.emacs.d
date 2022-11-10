@@ -6,6 +6,8 @@
 
 ;;; Code:
 
+(require 'init-vars)
+
 (use-package counsel
   :diminish ivy-mode counsel-mode
   :bind (("C-s"   . swiper-isearch)
@@ -143,9 +145,9 @@
 ;; Better experience with icons
 ;; Enable it before`ivy-rich-mode' for better performance
 
-(when (display-graphic-p)
-  (use-package all-the-icons-ivy-rich
-    :hook (ivy-mode . all-the-icons-ivy-rich-mode)))
+(use-package all-the-icons-ivy-rich
+  :if in-gui
+  :hook (ivy-mode . all-the-icons-ivy-rich-mode))
 
 ;; More friendly display transformer for Ivy
 (use-package ivy-rich

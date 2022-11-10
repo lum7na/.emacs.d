@@ -1,3 +1,5 @@
+(require 'init-vars)
+
 (scroll-bar-mode 0)
 (tool-bar-mode 0)
 (tooltip-mode 0)
@@ -31,14 +33,13 @@
   :hook (after-init . all-the-icons-ivy-rich-mode)
   )
 
-(use-package apropospriate-theme)
-
 (use-package doom-themes
   :config
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
         doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'apropospriate-light t)
+  ;;  (load-theme 'apropospriate-light t)
+  (load-theme 'doom-one t)
       
 
   ;; Enable flashing mode-line on errors

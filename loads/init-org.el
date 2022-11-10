@@ -1,53 +1,4 @@
-(setq fixed-pitch-faces
-  '(diff-added
-    diff-context
-    diff-file-header
-    diff-function
-    diff-header
-    diff-hunk-header
-    diff-removed
-    font-latex-math-face
-    font-latex-sedate-face
-    font-latex-warning-face
-    font-latex-sectioning-5-face
-    font-lock-builtin-face
-    font-lock-comment-delimiter-face
-    font-lock-constant-face
-    font-lock-doc-face
-    font-lock-function-name-face
-    font-lock-keyword-face
-    font-lock-negation-char-face
-    font-lock-preprocessor-face
-    font-lock-regexp-grouping-backslash
-    font-lock-regexp-grouping-construct
-    font-lock-string-face
-    font-lock-type-face
-    font-lock-variable-name-face
-    line-number
-    line-number-current-line
-    line-number-major-tick
-    line-number-minor-tick
-    message-header-name
-    message-header-to
-    message-header-cc
-    message-header-newsgroups
-    message-header-xheader
-    message-header-subject
-    message-header-other
-    org-block
-    ;;org-block-begin-line
-    ;;org-block-end-line
-    org-document-info-keyword
-    org-code
-    org-indent
-    org-latex-and-related
-    org-checkbox
-    org-formula
-    ;;org-meta-line
-    org-table
-    org-verbatim
-    ))
-
+(require 'init-vars)
 
 (use-package org
   :config
@@ -56,13 +7,15 @@
   (add-hook 'org-mode-hook (lambda ()
                              (dolist (face fixed-pitch-faces)  (set-face-attribute face nil :inherit 'fixed-pitch))))
 
-  (add-hook 'org-mode-hook (lambda () (set-face-attribute 'org-indent nil :foreground "#F5F5F5")))
+  (add-hook 'org-mode-hook (lambda () (set-face-attribute 'org-indent nil :foreground "#282c34")))
+;;  (add-hook 'org-mode-hook (lambda () (set-face-attribute 'org-hide nil :foreground "#282c34")))
   (let* ((variable-tuple
           (cond ((x-list-fonts "Sarasa SC")    '(:font "Sarasa SC"))
                 ((x-list-fonts "Source Sans Pro") '(:font "Source Sans Pro"))
                 (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
-         (base-font-color     (face-foreground 'default nil 'default))
-         (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
+         ;;         (base-font-color     (face-foreground 'default nil 'default))
+         (headline           `(:inherit default :weight bold)))
+    ;; :foreground ,base-font-color)))
 
     (custom-theme-set-faces
      'user
@@ -85,6 +38,8 @@
   (setq org-startup-indented t)
   (add-hook 'org-mode-hook 'org-num-mode)
   (add-hook 'org-mode-hook 'variable-pitch-mode)
+
+  (setq org-confirm-babel-evaluate nil)
 
   (setq org-link-frame-setup
         '((vm . vm-visit-folder-other-frame)
@@ -290,8 +245,8 @@
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t))
 
-(use-package org-protocol-capture-html
-  :quelpa (org-protocol-capture-html :fetcher github :repo "alphapapa/org-protocol-capture-html"))
+;;(use-package org-protocol-capture-html
+;;  :quelpa (org-protocol-capture-html :fetcher github :repo "alphapapa/org-protocol-capture-html"))
 
 
 (use-package org-ref
@@ -727,28 +682,44 @@
 ;; (setq org-archive-location "%s_archive::* Archived Tasks")
 
 
+;;mermaid
+(use-package mermaid-mode)
+(use-package ob-mermaid)
+(defun insert-mermaid-graph()
+  (interactive)
+  (progn
+    (forward-line 0)
+    (insert (concat "#+begin_src mermaid :file " (format-time-string "images/%Y-%m-%d_%H-%M-%S_mermaid.png"))
+            "\n\n"
+            "#+end_src"
+            )
+    (forward-line -1)
+    (forward-line 0)
+    )
+  )
 
-(major-mode-hydra-define org-mode nil
-  ("Org"
-   (("a" org-agenda "agenda")
-    ("ch" org-toggle-checkbox "toggle checkbox")
-    ("ph" (org-cycle-hide-drawers 'all) "hide drawers")
-    ("ps" org-show-all "show drawers"))
-   "Org Roam"
-   (("oi" org-roam-node-insert "insert")
-    ("of" org-roam-node-find "find")
-    ("oc" org-roam-capture "capture")
-    ("ol" org-roam-buffer-toggle "buffer toggle")
-    ("u" org-roam-ui-mode "ui mode" :toggle t))
-   "Image"
-   (("dc" my/org-download-clipboard "insert clipboard")
-    ("i" org-toggle-inline-images "display image" :toggle t))
-   "Latex"
-   (("l" org-latex-preview "display equation" :toggle t))
-   "Export"
-   (("ep" org-pandoc-export-to-latex-pdf "pandoc to latex pdf")
-    ("eo" org-pandoc-export-to-latex-pdf-and-open "pandoc to latex pdf and open"))
-   ))
+(defun org-roam-create-note-from-headline ()
+  "Create an Org-roam note from the current headline and jump to it.
+
+Normally, insert the headline’s title using the ’#title:’ file-level property
+and delete the Org-mode headline. However, if the current headline has a
+Org-mode properties drawer already, keep the headline and don’t insert
+‘#+title:'. Org-roam can extract the title from both kinds of notes, but using
+‘#+title:’ is a bit cleaner for a short note, which Org-roam encourages."
+  (interactive)
+  (let ((title (nth 4 (org-heading-components)))
+        (has-properties (org-get-property-block)))
+    (org-cut-subtree)
+    (org-roam-node-find 'other-window title nil)
+    (org-paste-subtree)
+    (unless has-properties
+      (kill-line)
+      (while (outline-next-heading)
+        (org-promote)))
+    (goto-char (point-min))
+    (when has-properties
+      (kill-line)
+      (kill-line))))
 
 ;; (pretty-hydra-define org-gtd
 ;;   (:color amaranth :quit-key "q" :title "GTD")
@@ -759,5 +730,9 @@
 ;;    (("i" bh/punch-in "start timer" :exit t)
 ;;     ("o" bh/punch-out "stop timer" :exit t)))
 ;;   )
+
+
+
+
 
 (provide 'init-org)
