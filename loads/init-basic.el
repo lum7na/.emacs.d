@@ -3,6 +3,7 @@
 ;;; Code:
 
 (require 'init-vars)
+(require 'package)
 
 (setq package-check-signature nil)
 
@@ -34,7 +35,10 @@
 (setq native-comp-async-report-warnings-errors nil)
 
 (setq org-roam-v2-ack t)
-(pixel-scroll-precision-mode 1)
+(require 'init-vars)
+(when (display-graphic-p)
+  (pixel-scroll-precision-mode 1)
+  )
 
 (setq backup-by-copying t
       backup-directory-alist '(("." . "~/.emacs.d/backup")))
@@ -42,7 +46,9 @@
 (setq exec-path (append exec-path '("/opt/local/bin")))
 
 (when (not (display-graphic-p))
-  (xterm-mouse-mode))
+  (xterm-mouse-mode 1)
+  (mouse-wheel-mode 1)
+  )
 
 
 (provide 'init-basic)

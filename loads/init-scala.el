@@ -2,7 +2,7 @@
 
 (use-package scala-mode)
 
-(when (init-scala-lsp)
+(when init-scala-lsp
   (progn
     (require 'init-lsp)
     (setq init-lsp-lock nil)
@@ -17,7 +17,8 @@
       (lsp-metals-server-args '("-J-Dmetals.allow-multiline-string-formatting=off"))
       )
     )
+  )
 
 
 
-  (provide 'init-scala)
+(provide 'init-scala)

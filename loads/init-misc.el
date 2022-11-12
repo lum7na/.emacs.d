@@ -1,3 +1,5 @@
+(require 'init-vars)
+
 (use-package yasnippet
   :config
   ;; 全局启用这个 minor mode
@@ -34,7 +36,8 @@
   (global-flycheck-mode))
 
 
-(use-package magit)
+(use-package magit
+  :if init-magic)
 
 ;; ~/.emacs.d/init.el
 (use-package projectile

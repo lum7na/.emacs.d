@@ -1,9 +1,13 @@
 (require 'init-vars)
 
-(scroll-bar-mode 0)
-(tool-bar-mode 0)
-(tooltip-mode 0)
-(menu-bar-mode 0)
+(when (display-graphic-p)
+  (progn	    
+    (scroll-bar-mode 0)
+    (tool-bar-mode 0)
+    (tooltip-mode 0)
+    (menu-bar-mode 0)
+    ))
+
 (column-number-mode 1)
 
 (display-time-mode 1)

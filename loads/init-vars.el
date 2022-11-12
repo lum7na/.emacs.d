@@ -1,7 +1,9 @@
 (defvar in-gui (display-graphic-p))
 (defvar my-org-roam-path "/Users/lum7na/org-roam/")
 (defvar my-zotero-path "/Users/lum7na/zotero/")
-(defvar init-scala-lsp nil)
+(defvar init-magic nil)
+(defvar init-scala-lsp t)
+
 
 (setq fixed-pitch-faces
   '(diff-added
