@@ -1,2 +1,2 @@
-My emacs config (mainly org-roam) on *Windows*.
+My emacs config (mainly org-roam) on *Macos*.
 
